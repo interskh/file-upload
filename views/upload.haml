@@ -1,8 +1,11 @@
 %html
   %body
     %h1 File uploader!
-    %form(method="post" enctype='multipart/form-data')   
-      %input(type='file' name='myfile')    
+    %form(method="post" enctype='multipart/form-data')
+      folder:
+      %input(type='text' name='folder')
+      %br
+      %input(type='file' name='myfile')
       %br
       %input(type='submit' value='Upload!')
 
