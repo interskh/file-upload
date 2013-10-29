@@ -30,7 +30,7 @@ class App < Sinatra::Application
     if File.exist? path and not File.directory? path
       send_file path, :disposition => 'inline'
     else
-      Dir.entries(path).select{|e| e !~ /^\./}.map do |e|
+      Dir.entries(path).select{|e| e !~ /^\./}.sort.map do |e|
         "<p><a href='#{File.join(dir,e)}'>#{e}</a></p>"
       end
     end
