@@ -7,6 +7,20 @@ class App < Sinatra::Application
 
   upload_path = 'uploads'
 
+  helpers do
+    def protected!
+      return if authorized?
+      headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+      halt 401, "Not authorized\n"
+    end
+
+    def authorized?
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? and @auth.basic? and @auth.credentials \
+        and @auth.credentials == [ENV['USER'], ENV['PASSWORD']]
+    end
+  end
+
   # Handle GET-request (Show the upload form)
   get "/upload" do
     haml :upload
@@ -24,6 +38,7 @@ class App < Sinatra::Application
   end
 
   get "/*" do
+    protected!
     dir = File.join params[:splat]
     path = File.join upload_path, dir
     logger.info path
