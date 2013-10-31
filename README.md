@@ -3,6 +3,7 @@ This is a simple app that allows user to upload file temporarily. It is a quick 
 ## Set user/password
 ### Heroku
 heroku config:set USER=admin
+
 heroku config:set PASSWORD=pw
 
 ### Command
